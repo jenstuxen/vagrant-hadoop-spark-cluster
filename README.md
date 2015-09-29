@@ -69,7 +69,7 @@ SSH into **node-2** (```vagrant ssh node-2```), change to root ```sudo su -``` a
 Run the following command on **node-2** to make sure you can run a MapReduce job.
 
 ```
-yarn jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar pi 2 100
+yarn jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 2 100
 ```
 
 ## Start Spark in Standalone Mode
@@ -78,21 +78,23 @@ SSH into **node-1** and issue the following command as root or priviliged user.
 1. ```$SPARK_HOME/sbin/start-all.sh```
 
 ### Test Spark on YARN
-You can test if Spark can run on YARN by issuing the following command. Try NOT to run this command on the slave nodes.
+You can test if Spark can run on YARN by issuing the following command on node-1 as root or priviliged user. Try NOT to run this command on the slave nodes.
 ```
 $SPARK_HOME/bin/spark-submit --class org.apache.spark.examples.SparkPi \
     --master yarn-cluster \
-    --num-executors 10 \
-    --executor-cores 2 \
-    lib/spark-examples*.jar \
-    100
+    --num-executors 3 \
+    --driver-memory 256M \
+    --executor-memory 512M \
+    --executor-cores 1 \
+    /usr/local/spark-1.5.0-bin-hadoop2.6/lib/spark-examples*.jar \
+    10
 ```
 	
 ### Test Spark using Shell
 Start the Spark shell using the following command. Try NOT to run this command on the slave nodes.
 
 ```
-$SPARK_HOME/bin/spark-shell --master spark://node1:7077
+$SPARK_HOME/bin/spark-shell --driver-memory 256M --executor-memory 512M --master spark://node1:7077
 ```
 
 Then go here https://spark.apache.org/docs/latest/quick-start.html to start the tutorial. Most likely, you will have to load data into HDFS to make the tutorial work (Spark cannot read data on the local file system).
