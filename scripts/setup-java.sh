@@ -8,14 +8,15 @@ function installLocalJava {
 }
 
 function installRemoteJava {
-	echo "install open jdk"
-	yum install -y jdk-8u25-linux-i586
+	echo "install oracle java from remote"
+	curl -o /vagrant/resources/$JAVA_ARCHIVE -O -L $JAVA_ARCHIVE_MIRROR_DOWNLOAD
+	tar -xzf /vagrant/resources/$JAVA_ARCHIVE -C /usr/local
 }
 
 function setupJava {
 	echo "setting up java"
 	if resourceExists $JAVA_ARCHIVE; then
-		ln -s /usr/local/jdk1.8.0_25 /usr/local/java
+		ln -s /usr/local/jdk1.8.0_60 /usr/local/java
 	else
 		ln -s /usr/lib/jvm/jre /usr/local/java
 	fi

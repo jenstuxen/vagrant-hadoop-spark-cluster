@@ -40,6 +40,7 @@ To add/remove slaves, change the number of nodes:
 line 5: ```numNodes = 4```  
 To modify VM memory change the following line:  
 line 13: ```v.customize ["modifyvm", :id, "--memory", "1024"]```  
+
 3. /scripts/common.sh  
 To use a different version of Java, change the following line depending on the version you downloaded to /resources directory.  
 line 4: JAVA_ARCHIVE=jdk-8u25-linux-i586.tar.gz  
