@@ -26,15 +26,15 @@ Ideal for development cluster on a laptop with at least 4GB of memory.
 
 ## Mac OS
 
-### Using homebrew (http://brew.sh):
+#### Using homebrew (http://brew.sh):
 
 1. Install Cask: ```brew install caskroom/cask/brew-cask```
 2. Install Virtualbox ```brew cask install virtualbox```
 3. Install Vagrant ```brew cask install vagrant```
 
-### Or manually install Virtualbox and Vagrant
+#### Or manually install Virtualbox and Vagrant
 
-## All Systems
+## On All Systems
 1. Open a command line.
 2. Run ```vagrant box add centos65 http://files.brianbirkinbine.com/vagrant-centos-65-i386-minimal.box```
 3. Git clone this project (```git clone https://github.com/jf87/vagrant-hadoop-spark-cluster.git```), and change directory (```cd vagrant-hadoop-spark-cluster```) into this project directory.
@@ -44,7 +44,7 @@ Ideal for development cluster on a laptop with at least 4GB of memory.
 # 4. Post Provisioning
 After you have provisioned the cluster, you need to run some commands to initialize your Hadoop cluster. SSH into node1 using  
 ```vagrant ssh node-1```
-Commands below require root permissions. Change to root access using ```sudo su -``` or create a new user and grant permissions if you want to use a non-root access. In such a case, you'll need to do this on VMs.
+Commands below require root permissions. Change to root access using ```sudo su -``` or create a new user and grant permissions if you want to use a non-root access. In such a case, you'll need to do this on all VMs.
 
 Issue the following command as root or priviliged user on **node-1**. 
 
