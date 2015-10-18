@@ -20,7 +20,7 @@ done
 
 function installSSHPass {
 	yum -y install wget
-	wget http://pkgs.repoforge.org/sshpass/sshpass-1.05-1.el6.rf.i686.rpm
+	wget http://130.226.142.195/bigdata/sshpass-1.05-1.el6.rf.i686.rpm
 	rpm -ivh sshpass-1.05-1.el6.rf.i686.rpm
 	yum -y install sshpass
 }
