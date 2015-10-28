@@ -7,7 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	(r.first).downto(r.last).each do |i|
 		config.vm.define "node-#{i}" do |node|
 			node.vm.box = "centos65"
-			node.vm.box_url = "http://files.brianbirkinbine.com/vagrant-centos-65-i386-minimal.box"
+			node.vm.box_url = "http://130.226.142.195/bigdata/vagrant-centos-65-i386-minimal.box"
 			node.vm.provider "virtualbox" do |v|
 			  v.name = "node#{i}"
 			  v.customize ["modifyvm", :id, "--memory", "1024"]
