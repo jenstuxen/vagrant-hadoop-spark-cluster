@@ -10,7 +10,32 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			node.vm.box_url = "http://130.226.142.195/bigdata/vagrant-centos-65-i386-minimal.box"
 			node.vm.provider "virtualbox" do |v|
 			  v.name = "node#{i}"
+
+                        file_to_disk = File.realpath( "." ).to_s + "/disk#{i}.vdi"
+
+		        if ARGV[0] == "up" && ! File.exist?(file_to_disk) 
+		           puts "Creating 250GB disk #{file_to_disk}."
+                           v.customize [
+	                   'createhd', 
+                              '--filename', file_to_disk, 
+                              '--format', 'VDI', 
+                              '--size', 250000  
+                           ] 
+                           v.customize [
+                              'storageattach', :id, 
+                              '--storagectl', "SATA", 
+                              '--port', 1, '--device', 0, 
+                              '--type', 'hdd', '--medium', 
+                              file_to_disk
+                           ]
+                        end
+
+
+			if i < 2
+			  v.customize ["modifyvm", :id, "--memory", "256"]
+			else
 			  v.customize ["modifyvm", :id, "--memory", "1024"]
+			end
 			end
 			if i < 10
 				node.vm.network :private_network, ip: "10.211.55.10#{i}"
@@ -18,6 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				node.vm.network :private_network, ip: "10.211.55.1#{i}"
 			end
 			node.vm.hostname = "node#{i}"
+                        node.vm.provision "shell", path: "scripts/add_new_disk.sh"
 			node.vm.provision "shell", path: "scripts/setup-centos.sh"
 			node.vm.provision "shell" do |s|
 				s.path = "scripts/setup-centos-hosts.sh"
@@ -46,6 +72,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				s.path = "scripts/setup-spark-slaves.sh"
 				s.args = "-s 3 -t #{numNodes}"
 			end
+
+
 		end
 	end
 end
